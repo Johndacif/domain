@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Niche Social Network</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General Body Style */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color: blue; /* Blue text color */
+            position: relative; /* For positioning the background image */
+            overflow: hidden; /* Prevents scrollbars */
+            background-color: #f0f0f0; /* Light background color */
+        }
+
+        /* Background Image Style */
+        .backgroundImage {
+            background: url('images/image/Gray Lilac Minimalist Animated Chat Messages Conversation Instagram Post.jpg') no-repeat center center fixed;
+            background-size: cover; /* Ensures the image covers the entire background */
+            height: 100vh; /* Full viewport height */
+            width: 100%; /* Full width */
+            position: absolute; /* Position it behind the content */
+            z-index: -1; /* Send it to the back */
+            opacity: 0.3; /* Slight opacity for better readability */
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent dark background */
+            overflow: hidden;
+            padding: 10px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 2;
+        }
+        .navbar a {
+            float: left;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f2f2f2; /* Light text color */
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s;
+        }
+        .navbar a:hover {
+            background-color: rgba(255, 255, 255, 0.3); /* Light hover effect */
+            color: black;
+            transform: scale(1.05); /* Slightly enlarge on hover */
+        }
+        .navbar a i {
+            margin-right: 8px; /* Space between icon and text */
+        }
+
+        /* Main Content */
+        .content {
+            padding: 100px 20px 20px; /* Top padding accounts for fixed navbar */
+            position: relative; /* Keep content above the background */
+            z-index: 1; /* Bring content above background */
+        }
+
+        /* Hero Image */
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        /* Call-to-Action Button */
+        .cta {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: #4CAF50; /* Green button */
+            color: white;
+            padding: 15px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .cta-button:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+
+        /* Testimonials */
+        .testimonials blockquote {
+            border-left: 2px solid #FFD700; /* Gold color for blockquote */
+            padding-left: 10px;
+            margin: 10px 0;
+            text-align: left;
+        }
+        .testimonials footer {
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #f2f2f2;
+            text-align: center;
+            padding: 10px;
+            position: fixed; /* Fixed at the bottom */
+            bottom: 0;
+            width: 100%;
+            z-index: 1; /* Bring footer above background */
+        }
+
+        /* Login and Registration Modal */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 10; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.6); /* Black with opacity */
+            display: flex; /* Flexbox for centering */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+        }
+
+        .modal-content {
+            background-color: #ffffff; /* White background */
+            padding: 30px; /* Padding */
+            border: 1px solid #888; /* Border */
+            width: 90%;
+            max-width: 500px; /* Width of the modal */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+            text-align: left; /* Align text to the left */
+            position: relative;
+        }
+
+        /* Close Button */
+        .close {
+            color: #aaa;
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+        }
+
+        /* Modal Title */
+        .modal-content h2 {
+            margin-top: 0;
+            text-align: center;
+            color: blue; /* Blue title color */
+        }
+
+        /* Tab Buttons */
+        .tab {
+            overflow: hidden;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .tab button {
+            background-color: inherit;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: background-color 0.3s;
+            font-size: 17px;
+            color: blue; /* Blue text */
+        }
+
+        .tab button:hover {
+            background-color: #ddd;
+        }
+
+        .tab button.active {
+            background-color: #ccc;
+        }
+
+        /* Form Styles */
+        .tabcontent {
+            display: none;
+            padding: 20px 0;
+        }
+
+        /* Input Styles */
+        .modal-content label {
+            display: block;
+            margin-bottom: 5px;
+            color: blue; /* Blue labels */
+            font-weight: bold;
+        }
+
+        .modal-content input[type="email"],
+        .modal-content input[type="password"],
+        .modal-content input[type="text"],
+        .modal-content input[type="tel"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        /* Submit Button */
+        .modal-content input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: blue; /* Blue button */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .modal-content input[type="submit"]:hover {
+            background-color: darkblue; /* Darker blue on hover */
+        }
+
+        /* Social Media Login */
+        .social-media {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .social-media button {
+            background-color: #4267B2; /* Facebook blue */
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-media .google-btn {
+            background-color: #db4437; /* Google red */
+        }
+
+        .social-media button:hover {
+            opacity: 0.8;
+        }
+
+        /* Forgot Password Link */
+        .forgot-password {
+            display: block;
+            margin-top: 10px;
+            text-align: right;
+            color: blue; /* Blue text */
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Image -->
+    <div class="backgroundImage"></div>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <a href="#" id="home-btn"><i class="fas fa-home"></i> Home</a>
+        <a href="#features"><i class="fas fa-star"></i> Features</a>
+        <a href="#about"><i class="fas fa-info-circle"></i> About</a>
+        <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
+        <a href="#chat" id="chat-link"><i class="fas fa-comments"></i> Chat</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content" id="home">
+        <h1>Welcome to Your Niche Social Network</h1>
+        <p>Connect with like-minded individuals and grow your community.</p>
+
+        <!-- Hero Image -->
+        <div class="hero-image">
+            <img src="images/hero-image.jpg" alt="Community Image">
+        </div>
+
+        <!-- Call-to-Action Button -->
+        <div class="cta">
+            <h2>Join Us Today!</h2>
+            <p>Become a part of a vibrant community where your passions come to life.</p>
+            <a href="#" class="cta-button" id="signup-btn">Sign Up Now</a>
+        </div>
+
+        <!-- Testimonials -->
+        <div class="testimonials">
+            <h2>What Our Members Say</h2>
+            <blockquote>
+                <p>"This platform helped me connect with people who share my interests!"</p>
+                <footer>- Alex, Photographer</footer>
+            </blockquote>
+            <blockquote>
+                <p>"I found a great community for sharing my artwork and getting feedback!"</p>
+                <footer>- Jamie, Artist</footer>
+            </blockquote>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        &copy; 2024 Niche Social Network. All rights reserved.
+    </div>
+
+    <!-- Login and Registration Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="tab">
+                <button class="tablinks active" onclick="openTab(event, 'Login')">Login</button>
+                <button class="tablinks" onclick="openTab(event, 'Register')">Register</button>
+            </div>
+
+            <!-- Login Tab Content -->
+            <div id="Login" class="tabcontent" style="display: block;">
+                <h2>Login</h2>
+                <form id="login-form">
+                    <label for="login-email">Email:</label>
+                    <input type="email" id="login-email" name="login-email" required>
+
+                    <label for="login-password">Password:</label>
+                    <input type="password" id="login-password" name="login-password" required>
+
+                    <input type="submit" value="Login">
+                </form>
+                <div class="social-media">
+                    <button onclick="loginWithFacebook()"><i class="fab fa-facebook-f"></i> Login with Facebook</button>
+                    <button class="google-btn" onclick="loginWithGoogle()"><i class="fab fa-google"></i> Login with Google</button>
+                </div>
+                <a href="#" class="forgot-password" onclick="forgotPassword()">Forgot Password?</a>
+            </div>
+
+            <!-- Register Tab Content -->
+            <div id="Register" class="tabcontent">
+                <h2>Register</h2>
+                <form id="register-form">
+                    <label for="first-name">First Name:</label>
+                    <input type="text" id="first-name" name="first-name" required>
+
+                    <label for="register-email">Email:</label>
+                    <input type="email" id="register-email" name="register-email" required>
+
+                    <label for="register-password">Password:</label>
+                    <input type="password" id="register-password" name="register-password" required>
+
+                    <label for="register-phone">Phone Number:</label>
+                    <input type="tel" id="register-phone" name="register-phone" required>
+
+                    <input type="submit" value="Register">
+                </form>
+                <div class="social-media">
+                    <button onclick="registerWithFacebook()"><i class="fab fa-facebook-f"></i> Register with Facebook</button>
+                    <button class="google-btn" onclick="registerWithGoogle()"><i class="fab fa-google"></i> Register with Google</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize toggle state
+        let isOnHome = true;
+
+        // Get modal element
+        const modal = document.getElementById("myModal");
+
+        // Get open modal buttons
+        const homeBtn = document.getElementById("home-btn");
+        const signupBtn = document.getElementById("signup-btn");
+
+        // Get close button
+        const span = document.getElementsByClassName("close")[0];
+
+        // Function to open the modal
+        function openModal() {
+            modal.style.display = "flex";
+            // Pre-fill the login form if a user exists
+            prefillLoginForm();
+        }
+
+        // Open the modal when the Home button is clicked
+        homeBtn.onclick = function(event) {
+            event.preventDefault(); // Prevent default navigation
+            toggleHomeButton();
+        }
+
+        // Open the modal when the Sign Up button is clicked
+        signupBtn.onclick = function(event) {
+            event.preventDefault(); // Prevent default navigation
+            openModal();
+            openTab(event, 'Register'); // Switch to Register tab
+        }
+
+        // Close the modal when the user clicks on <span> (x)
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // Close the modal when the user clicks anywhere outside of the modal
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Tab functionality
+        function openTab(evt, tabName) {
+            // Declare all variables
+            let i, tabcontent, tablinks;
+
+            // Get all elements with class="tabcontent" and hide them
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            // Get all elements with class="tablinks" and remove the class "active"
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            // Show the current tab, and add an "active" class to the button that opened the tab
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+
+            // If opening the Login tab, pre-fill the form if users exist
+            if (tabName === 'Login') {
+                prefillLoginForm();
+            } else {
+                // Clear login form fields when switching to Register
+                document.getElementById('login-form').reset();
+            }
+        }
+
+        // Function to pre-fill login form with the first registered user's credentials
+        function prefillLoginForm() {
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            if (users.length > 0) {
+                const firstUser = users[0];
+                document.getElementById('login-email').value = firstUser.email;
+                document.getElementById('login-password').value = firstUser.password;
+            }
+        }
+
+        // Handle registration form submission
+        document.getElementById('register-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Get user details from the form
+            const firstName = document.getElementById('first-name').value.trim();
+            const email = document.getElementById('register-email').value.trim();
+            const password = document.getElementById('register-password').value.trim();
+            const phone = document.getElementById('register-phone').value.trim();
+
+            // Retrieve existing users from localStorage or initialize empty array
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+
+            // Check if email already exists
+            const userExists = users.some(user => user.email === email);
+
+            if (userExists) {
+                alert('Email already exists. Please choose a different one.');
+                return;
+            }
+
+            // Add new user to users array
+            users.push({
+                firstName,
+                email,
+                password, // Note: In production, never store plain passwords
+                phone
+            });
+
+            // Save updated users array to localStorage
+            localStorage.setItem('users', JSON.stringify(users));
+
+            alert('Registration successful! You can now log in.');
+
+            // Clear the registration form
+            document.getElementById('register-form').reset();
+
+            // Switch to Login tab
+            const loginTab = document.querySelector('.tab button:first-child');
+            loginTab.click();
+        });
+
+        // Handle login form submission
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Get login credentials
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value.trim();
+
+            // Retrieve users from localStorage
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+
+            // Find user with matching email and password
+            const user = users.find(user => user.email === email && user.password === password);
+
+            if (user) {
+                alert('Login successful!');
+                isLoggedIn = true;
+                localStorage.setItem('isLoggedIn', 'true'); // Store login status
+
+                // Update current page state in localStorage
+                localStorage.setItem('currentPage', 'chat');
+
+                // Close the modal
+                modal.style.display = "none";
+
+                // Redirect to the chat page
+                window.location.href = "chat.html";
+            } else {
+                alert('Invalid login credentials. Please try again.');
+            }
+        });
+
+        // Simulate social media login (to be replaced with real OAuth)
+        function loginWithFacebook() {
+            alert('Facebook login is not implemented yet.');
+        }
+
+        function loginWithGoogle() {
+            alert('Google login is not implemented yet.');
+        }
+
+        function registerWithFacebook() {
+            alert('Facebook registration is not implemented yet.');
+        }
+
+        function registerWithGoogle() {
+            alert('Google registration is not implemented yet.');
+        }
+
+        // Forgot Password functionality
+        function forgotPassword() {
+            const email = prompt('Please enter your registered email address:');
+            if (email) {
+                // Check if email exists in users
+                let users = JSON.parse(localStorage.getItem('users')) || [];
+                const user = users.find(user => user.email === email.trim());
+
+                if (user) {
+                    // Simulate password reset
+                    const newPassword = prompt('Enter your new password:');
+                    if (newPassword) {
+                        user.password = newPassword.trim();
+                        localStorage.setItem('users', JSON.stringify(users));
+                        alert('Password has been reset successfully!');
+                        
+                        // Optionally, pre-fill the login form with the updated password
+                        prefillLoginForm();
+                    }
+                } else {
+                    alert('No account found with that email address.');
+                }
+            }
+        }
+
+        // Function to toggle Home button between Home and Chat
+        function toggleHomeButton() {
+            const currentPage = localStorage.getItem('currentPage') || 'home';
+            if (currentPage === 'home') {
+                // If on Home page, and logged in, go to Chat page
+                if (isLoggedIn) {
+                    localStorage.setItem('currentPage', 'chat');
+                    window.location.href = "chat.html";
+                } else {
+                    // If not logged in, open login modal
+                    openModal();
+                    openTab(event, 'Login'); // Switch to Login tab
+                }
+            } else {
+                // If on Chat page, go back to Home page
+                localStorage.setItem('currentPage', 'home');
+                window.location.href = "index.html";
+            }
+        }
+    </script>
+</body>
+</html>
